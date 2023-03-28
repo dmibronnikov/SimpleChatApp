@@ -8,9 +8,9 @@ private let poll: Poll = Poll(id: 1, question: "What is the greatest NBA team in
 ])
 
 private let messages: [Message] = [
-//    Message(id: 1, senderId: 1, content: .text(text: "Sounds good to me!")),
-//    Message(id: 2, senderId: 2, content: .text(text: "Nice! 12 ppl in total. Let’s gather at the metro station!🚆🚆🚆")),
-//    Message(id: 3, senderId: 3, content: .text(text: "Okie dokie!!")),
+    Message(id: 1, senderId: 1, content: .text(text: "Sounds good to me!")),
+    Message(id: 2, senderId: 2, content: .text(text: "Nice! 12 ppl in total. Let’s gather at the metro station!🚆🚆🚆")),
+    Message(id: 3, senderId: 3, content: .text(text: "Okie dokie!!")),
     Message(id: 4, senderId: 2, content: .poll(poll: poll))
 ]
 
@@ -40,6 +40,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
+        
+        tableView.register(ChatTextCell.self)
         tableView.register(ChatPollCell.self)
     }
     
@@ -56,13 +58,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeue(ChatPollCell.self, at: indexPath)
         let message = messages[indexPath.row]
-        if case .poll(let poll) = message.content, let sender = users[message.senderId] {
-            cell.configure(messageId: message.id, poll: poll, sender: sender)
+        let sender = users[message.senderId]!
+        switch message.content {
+            case .text(let text):
+                let textCell = tableView.dequeue(ChatTextCell.self, at: indexPath)
+                textCell.configure(messageId: message.id, text: text, sender: sender)
+                return textCell
+            case .poll(let poll):
+                let pollCell = tableView.dequeue(ChatPollCell.self, at: indexPath)
+                pollCell.configure(messageId: message.id, poll: poll, sender: sender)
+                return pollCell
         }
-        
-        return cell
     }
 }
 
