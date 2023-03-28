@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		549B608429D310000074CF88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B608329D310000074CF88 /* AppDelegate.swift */; };
 		549B608629D310000074CF88 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B608529D310000074CF88 /* SceneDelegate.swift */; };
-		549B608829D310000074CF88 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B608729D310000074CF88 /* ViewController.swift */; };
+		549B608829D310000074CF88 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B608729D310000074CF88 /* ChatViewController.swift */; };
 		549B608D29D310010074CF88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 549B608C29D310010074CF88 /* Assets.xcassets */; };
 		549B609029D310010074CF88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 549B608E29D310010074CF88 /* LaunchScreen.storyboard */; };
+		549B609C29D3127B0074CF88 /* ChatTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B609B29D3127B0074CF88 /* ChatTextCell.swift */; };
+		549B609E29D312950074CF88 /* ChatPollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B609D29D312950074CF88 /* ChatPollCell.swift */; };
 		549B60A329D312BF0074CF88 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B60A029D312BF0074CF88 /* User.swift */; };
 		549B60A429D312BF0074CF88 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B60A129D312BF0074CF88 /* Message.swift */; };
 		549B60A529D312BF0074CF88 /* Poll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B60A229D312BF0074CF88 /* Poll.swift */; };
@@ -21,10 +23,12 @@
 		549B608029D310000074CF88 /* SimpleChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		549B608329D310000074CF88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		549B608529D310000074CF88 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		549B608729D310000074CF88 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		549B608729D310000074CF88 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		549B608C29D310010074CF88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		549B608F29D310010074CF88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		549B609129D310010074CF88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		549B609B29D3127B0074CF88 /* ChatTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextCell.swift; sourceTree = "<group>"; };
+		549B609D29D312950074CF88 /* ChatPollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPollCell.swift; sourceTree = "<group>"; };
 		549B60A029D312BF0074CF88 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		549B60A129D312BF0074CF88 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		549B60A229D312BF0074CF88 /* Poll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Poll.swift; sourceTree = "<group>"; };
@@ -61,10 +65,10 @@
 			isa = PBXGroup;
 			children = (
 				549B609F29D312AD0074CF88 /* Model */,
+				549B609829D312370074CF88 /* UI */,
 				549B609729D311C20074CF88 /* Resources */,
 				549B608329D310000074CF88 /* AppDelegate.swift */,
 				549B608529D310000074CF88 /* SceneDelegate.swift */,
-				549B608729D310000074CF88 /* ViewController.swift */,
 			);
 			path = SimpleChatApp;
 			sourceTree = "<group>";
@@ -77,6 +81,32 @@
 				549B609129D310010074CF88 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		549B609829D312370074CF88 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				549B609929D3123E0074CF88 /* Chat */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		549B609929D3123E0074CF88 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				549B609A29D312690074CF88 /* Cells */,
+				549B608729D310000074CF88 /* ChatViewController.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		549B609A29D312690074CF88 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				549B609B29D3127B0074CF88 /* ChatTextCell.swift */,
+				549B609D29D312950074CF88 /* ChatPollCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		549B609F29D312AD0074CF88 /* Model */ = {
@@ -159,10 +189,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				549B608829D310000074CF88 /* ViewController.swift in Sources */,
+				549B608829D310000074CF88 /* ChatViewController.swift in Sources */,
 				549B608429D310000074CF88 /* AppDelegate.swift in Sources */,
 				549B60A329D312BF0074CF88 /* User.swift in Sources */,
+				549B609E29D312950074CF88 /* ChatPollCell.swift in Sources */,
 				549B60A529D312BF0074CF88 /* Poll.swift in Sources */,
+				549B609C29D3127B0074CF88 /* ChatTextCell.swift in Sources */,
 				549B608629D310000074CF88 /* SceneDelegate.swift in Sources */,
 				549B60A429D312BF0074CF88 /* Message.swift in Sources */,
 			);

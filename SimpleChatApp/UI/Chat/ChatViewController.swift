@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ChatViewController.swift
 //  SimpleChatApp
 //
 //  Created by Dmitriy Bronnikov on 28.03.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ChatViewController: UIViewController {
 
     private let label: UILabel = .init()
     
