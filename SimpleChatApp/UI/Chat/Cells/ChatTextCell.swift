@@ -40,6 +40,7 @@ final class ChatTextCell: UITableViewCell {
         
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        selectionStyle = .none
         
         setupConstraints()
     }
