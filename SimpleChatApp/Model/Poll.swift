@@ -1,10 +1,3 @@
-//
-//  Poll.swift
-//  SimpleChat
-//
-//  Created by Dmitriy Bronnikov on 27.03.2023.
-//
-
 import Foundation
 
 struct Poll {
