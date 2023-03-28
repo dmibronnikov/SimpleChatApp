@@ -25,6 +25,7 @@
 		54E1EBFA29D376B20029F2EB /* PollTotalVotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBF929D376B20029F2EB /* PollTotalVotesView.swift */; };
 		54E1EBFC29D380550029F2EB /* PollOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBFB29D380550029F2EB /* PollOptionView.swift */; };
 		54E1EBFE29D38F400029F2EB /* ChatTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBFD29D38F400029F2EB /* ChatTitleView.swift */; };
+		54E1EC0029D390C20029F2EB /* ChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBFF29D390C20029F2EB /* ChatInputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		54E1EBF929D376B20029F2EB /* PollTotalVotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollTotalVotesView.swift; sourceTree = "<group>"; };
 		54E1EBFB29D380550029F2EB /* PollOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollOptionView.swift; sourceTree = "<group>"; };
 		54E1EBFD29D38F400029F2EB /* ChatTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTitleView.swift; sourceTree = "<group>"; };
+		54E1EBFF29D390C20029F2EB /* ChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 				54E1EBF929D376B20029F2EB /* PollTotalVotesView.swift */,
 				54E1EBFB29D380550029F2EB /* PollOptionView.swift */,
 				54E1EBFD29D38F400029F2EB /* ChatTitleView.swift */,
+				54E1EBFF29D390C20029F2EB /* ChatInputView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				549B60A529D312BF0074CF88 /* Poll.swift in Sources */,
 				549B609C29D3127B0074CF88 /* ChatTextCell.swift in Sources */,
 				54E1EBFC29D380550029F2EB /* PollOptionView.swift in Sources */,
+				54E1EC0029D390C20029F2EB /* ChatInputView.swift in Sources */,
 				549B608629D310000074CF88 /* SceneDelegate.swift in Sources */,
 				54E1EBFA29D376B20029F2EB /* PollTotalVotesView.swift in Sources */,
 				549B60A429D312BF0074CF88 /* Message.swift in Sources */,
