@@ -33,7 +33,19 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .background
+        
+        setupNavigationBar()
         setupTableView()
+    }
+    
+    private func setupNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .lightBackground
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        
+        navigationItem.titleView = ChatTitleView(title: "Lowkey Squad", subtitle: "1 member • 1 online")
     }
     
     private func setupTableView() {
