@@ -1,27 +1,131 @@
 import UIKit
 
 final class ChatPollCell: UITableViewCell {
-    private let containerView: UIView = .init()
-    private let avatarView: UIView = .init()
-    private let usernameLabel: UILabel = .init()
-    private let pollTypeLabel: UILabel = .init()
-    private let pollVotesView: UIView = .init()
-    private let pollQuestionLabel: UILabel = .init()
-    private var pollOptionViews: [UIView] = .init()
+    private let containerView: UIView = {
+        let colors: [CGColor] = [
+            UIColor.redPurple,
+            UIColor.seance,
+            UIColor.windsor,
+            UIColor.tangaroa
+        ].map(\.cgColor)
+        
+        let view = GradientView()
+        view.colors = colors
+        view.locations = [0.05, 0.2, 0.5, 0.75]
+        view.startPoint = CGPoint(x: 0, y: 0)
+        view.endPoint = CGPoint(x: 1, y: 1)
+        view.layer.cornerRadius = 18
+        return view
+    }()
+    private let avatarView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 13
+        
+        return view
+    }()
+    private let usernameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .appFont(size: 12, weight: .semibold)
+        label.textColor = .textPrimary
+        
+        return label
+    }()
+    private let pollTypeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "public poll"
+        label.font = .appFont(size: 10, weight: .regular)
+        label.textColor = .textPrimary
+        
+        return label
+    }()
+    private let totalVotesView: PollTotalVotesView = {
+        let view = PollTotalVotesView()
+        view.backgroundColor = .pink
+        view.layer.cornerRadius = 25
+        
+        return view
+    }()
+    private let questionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .appFont(size: 15, weight: .medium)
+        label.textColor = .textPrimary
+        
+        return label
+    }()
+    private var pollOptionViews: [PollOptionView] = []
+    
+    private let containerGradientLayer: CAGradientLayer = {
+        let colors: [CGColor] = [
+            UIColor.redPurple,
+            UIColor.seance,
+            UIColor.windsor,
+            UIColor.tangaroa
+        ].map(\.cgColor)
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors
+        gradientLayer.locations = [0.1, 0.2, 0.5, 0.75]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        
+        return gradientLayer
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        setupViews()
+        setup()
     }
     
     required init?(coder: NSCoder) { fatalError() }
     
-    private func setupViews() {
+    private func setup() {
         contentView.addSubview(containerView)
-        [avatarView, usernameLabel, pollTypeLabel, pollVotesView, pollQuestionLabel].forEach {
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        [avatarView, usernameLabel, pollTypeLabel, totalVotesView, questionLabel].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview($0)
         }
+        
+        selectionStyle = .none
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6)
+        ])
+        NSLayoutConstraint.activate([
+            totalVotesView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            totalVotesView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            totalVotesView.widthAnchor.constraint(equalToConstant: 50),
+            totalVotesView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        NSLayoutConstraint.activate([
+            avatarView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            avatarView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
+            avatarView.widthAnchor.constraint(equalToConstant: 36),
+            avatarView.heightAnchor.constraint(equalToConstant: 36)
+        ])
+        NSLayoutConstraint.activate([
+            pollTypeLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 10),
+            pollTypeLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
+            usernameLabel.leadingAnchor.constraint(equalTo: pollTypeLabel.leadingAnchor),
+            usernameLabel.topAnchor.constraint(equalTo: pollTypeLabel.bottomAnchor, constant: 2)
+        ])
+        NSLayoutConstraint.activate([
+            questionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            questionLabel.topAnchor.constraint(equalTo: avatarView.bottomAnchor, constant: 20),
+            questionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            questionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -20)
+        ])
     }
     
     override func prepareForReuse() {
@@ -31,200 +135,36 @@ final class ChatPollCell: UITableViewCell {
         pollOptionViews.removeAll()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        containerGradientLayer.frame = containerView.bounds
+    }
+    
     func configure(messageId: Int, poll: Poll, sender: User) {
+        usernameLabel.text = sender.username
+        totalVotesView.votes = poll.votes
+        questionLabel.text = poll.question
         
-    }
-}
-
-extension ChatPollCell {
-    class LayoutItem {
-        let frame: CGRect
-        let type: LayoutItemType
-        let children: [LayoutItem]
-        
-        init(frame: CGRect, type: LayoutItemType, children: [LayoutItem] = []) {
-            self.frame = frame
-            self.type = type
-            self.children = children
-        }
-    }
-    
-    enum LayoutItemType {
-        case container
-        case avatar
-        case username(NSAttributedString)
-        case pollType(NSAttributedString)
-        case pollVotes(NSAttributedString, NSAttributedString)
-        case pollQuestion(NSAttributedString)
-        case pollOption(NSAttributedString)
-    }
-    
-    static func calculateLayout(poll: Poll, sender: User, widthLimit: CGFloat) -> LayoutItem {
-        var containerChildren: [LayoutItem] = []
-        let avatarSize = CGSize(width: 36, height: 36)
-        let xInset: CGFloat = 10
-        let totalVotesSize = CGSize(width: 50, height: 50)
-        
-        let avatarFrame = CGRect(origin: CGPoint(x: 20, y: 20), size: avatarSize)
-        containerChildren.append(LayoutItem(frame: avatarFrame, type: .avatar))
-        
-        let totalVotesFrame = CGRect(
-            origin: CGPoint(x: widthLimit - totalVotesSize.width + 20, y: 12),
-            size: totalVotesSize
-        )
-        let votesCountString = NSAttributedString(string: "\(poll.votes)", attributes: textPrimarySemibold16Attributes)
-        let votesString = NSAttributedString(string: "votes", attributes: textPrimaryRegular10Attributes)
-        containerChildren.append(LayoutItem(frame: totalVotesFrame, type: .pollVotes(votesCountString, votesString)))
-        
-        let pollType = NSAttributedString(string: "public poll", attributes: textPrimaryRegular10Attributes)
-        let pollTypeSize = pollType.size(with: CGSize(
-            width: widthLimit - avatarFrame.maxX - xInset,
-            height: CGFloat.infinity
-        ))
-        let pollTypeFrame = CGRect(
-            origin: CGPoint(x: avatarFrame.maxX + xInset, y: 20),
-            size: pollTypeSize
-        )
-        containerChildren.append(LayoutItem(frame: pollTypeFrame, type: .pollType(pollType)))
-        
-        let username = NSAttributedString(string: sender.username, attributes: textPrimarySemibold12Attributes)
-        let usernameSize = username.size(with: CGSize(
-            width: widthLimit - avatarFrame.maxX - xInset,
-            height: CGFloat.infinity
-        ))
-        let usernameFrame = CGRect(
-            origin: CGPoint(x: avatarFrame.maxX + xInset, y: pollTypeFrame.maxY + 2),
-            size: usernameSize
-        )
-        containerChildren.append(LayoutItem(frame: usernameFrame, type: .username(username)))
-        
-        let question = NSAttributedString(string: poll.question, attributes: textPrimaryMedium15Attributes)
-        let questionFrame = CGRect(
-            origin: CGPoint(x: 20, y: avatarFrame.maxY + 20),
-            size: question.size(with: CGSize(width: widthLimit, height: CGFloat.infinity))
-        )
-        containerChildren.append(LayoutItem(frame: questionFrame, type: .pollQuestion(question)))
-        
-        let optionSize = CGSize(width: widthLimit, height: 40)
-        let startingOptionY: CGFloat = questionFrame.maxY + 12
-        var pollOptions: [LayoutItem] = []
-        for (index, option) in poll.options.enumerated() {
-            let optionFrame = CGRect(
-                origin: CGPoint(x: 20, y: startingOptionY + (optionSize.height + 8) * CGFloat(index)),
-                size: optionSize
-            )
-
-            let optionString = NSAttributedString(string: option.text, attributes: textPrimaryRegular12Attributes)
-            pollOptions.append(LayoutItem(frame: optionFrame, type: .pollOption(optionString)))
+        for option in poll.options {
+            let optionView = PollOptionView()
+            optionView.text = option.text
+            
+            containerView.addSubview(optionView)
+            optionView.translatesAutoresizingMaskIntoConstraints = false
+            
+            let lastView = pollOptionViews.last ?? questionLabel
+            NSLayoutConstraint.activate([
+                optionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+                optionView.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 12),
+                optionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+                optionView.heightAnchor.constraint(equalToConstant: 40)
+            ])
+            
+            pollOptionViews.append(optionView)
         }
         
-        
+        guard let lastOptionView = pollOptionViews.last else { return }
+        lastOptionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20).isActive = true
     }
 }
-
-private extension NSAttributedString {
-    func size(with boundingSize: CGSize) -> CGSize {
-        self.boundingRect(
-            with: boundingSize,
-            options: [.usesLineFragmentOrigin, .usesFontLeading],
-            context: nil).size
-    }
-}
-
-//private static func calculatePollLayout(poll: Poll, sender: User, widthLimit: CGFloat) -> Layout {
-//    var items: [(item: Item, frame: CGRect)] = []
-//
-//    let avatarSize = CGSize(width: 36, height: 36)
-//    let xInset: CGFloat = 10
-//    let totalVotesSize = CGSize(width: 50, height: 50)
-//
-//    let avatarFrame = CGRect(origin: CGPoint(x: 20, y: 20), size: avatarSize)
-//    items.append((Item.view(type: .avatar(cornerRadius: 13)), avatarFrame))
-//
-//    let totalVotesFrame = CGRect(
-//        origin: CGPoint(x: widthLimit - totalVotesSize.width + 20, y: 12),
-//        size: totalVotesSize
-//    )
-//    let votesString = NSAttributedString(string: "votes", attributes: textPrimaryRegular10Attributes)
-//    items.append((Item.view(type: .pollTotalVotes(count: poll.votes, text: votesString)), totalVotesFrame))
-//
-//    let pollType = NSAttributedString(string: "public poll", attributes: textPrimaryRegular10Attributes)
-//    let pollTypeSize = pollType.size(with: CGSize(
-//        width: widthLimit - avatarFrame.maxX - xInset,
-//        height: CGFloat.infinity
-//    ))
-//    let pollTypeFrame = CGRect(
-//        origin: CGPoint(x: avatarFrame.maxX + xInset, y: 20),
-//        size: pollTypeSize
-//    )
-//    items.append((Item.text(text: pollType), pollTypeFrame))
-//
-//    let username = NSAttributedString(string: sender.username, attributes: textPrimarySemibold12Attributes)
-//    let usernameSize = username.size(with: CGSize(
-//        width: widthLimit - avatarFrame.maxX - xInset,
-//        height: CGFloat.infinity
-//    ))
-//    let usernameFrame = CGRect(
-//        origin: CGPoint(x: avatarFrame.maxX + xInset, y: pollTypeFrame.maxY + 2),
-//        size: usernameSize
-//    )
-//    items.append((Item.text(text: username), usernameFrame))
-//
-//    let question = NSAttributedString(string: poll.question, attributes: textPrimaryMedium15Attributes)
-//    let questionFrame = CGRect(
-//        origin: CGPoint(x: 20, y: avatarFrame.maxY + 20),
-//        size: question.size(with: CGSize(width: widthLimit, height: CGFloat.infinity))
-//    )
-//    items.append((Item.text(text: question), questionFrame))
-//
-//    let optionSize = CGSize(width: widthLimit, height: 40)
-//    let startingOptionY: CGFloat = questionFrame.maxY + 12
-//    for (index, option) in poll.options.enumerated() {
-//        let optionFrame = CGRect(
-//            origin: CGPoint(x: 20, y: startingOptionY + (optionSize.height + 8) * CGFloat(index)),
-//            size: optionSize
-//        )
-//
-//        let optionString = NSAttributedString(string: option.text, attributes: textPrimaryRegular12Attributes)
-//        items.append((Item.view(type: .pollOption(text: optionString)), optionFrame))
-//    }
-//
-//    let messageSize = CGSize(width: widthLimit, height: items.last!.frame.maxY + 20)
-//    return Layout(items: items, size: messageSize)
-//}
-
-private let textPrimaryRegular10Attributes: [NSAttributedString.Key: Any] = [
-    .font: UIFont.appFont(size: 10, weight: .regular),
-    .foregroundColor: UIColor.textPrimary
-]
-
-private let textPrimaryRegular12Attributes: [NSAttributedString.Key: Any] = [
-    .font: UIFont.appFont(size: 12, weight: .regular),
-    .foregroundColor: UIColor.textPrimary
-]
-
-private let textPrimarySemibold12Attributes: [NSAttributedString.Key: Any] = [
-    .font: UIFont.appFont(size: 12, weight: .semibold),
-    .foregroundColor: UIColor.textPrimary
-]
-
-private let textSecondarySemibold12Attributes: [NSAttributedString.Key: Any] = [
-    .font: UIFont.appFont(size: 12, weight: .semibold),
-    .foregroundColor: UIColor.textSecondary
-]
-
-private let textPrimaryRegular15Attributes: [NSAttributedString.Key: Any] = [
-    .font: UIFont.appFont(size: 15, weight: .regular),
-    .foregroundColor: UIColor.textPrimary
-]
-
-private let textPrimaryMedium15Attributes: [NSAttributedString.Key: Any] = [
-    .font: UIFont.appFont(size: 15, weight: .medium),
-    .foregroundColor: UIColor.textPrimary
-]
-
-private let textPrimarySemibold16Attributes: [NSAttributedString.Key: Any] = [
-    .font: UIFont.appFont(size: 16, weight: .semibold),
-    .foregroundColor: UIColor.textPrimary
-]
-

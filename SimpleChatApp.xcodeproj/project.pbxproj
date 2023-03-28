@@ -21,6 +21,9 @@
 		549B60AC29D31A9F0074CF88 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B60A929D31A9F0074CF88 /* UIColor.swift */; };
 		549B60AD29D31A9F0074CF88 /* UITableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549B60AA29D31A9F0074CF88 /* UITableView+Register.swift */; };
 		54E1EBF529D36F920029F2EB /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 54E1EBF429D36F920029F2EB /* Fonts */; };
+		54E1EBF829D374170029F2EB /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBF729D374170029F2EB /* GradientView.swift */; };
+		54E1EBFA29D376B20029F2EB /* PollTotalVotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBF929D376B20029F2EB /* PollTotalVotesView.swift */; };
+		54E1EBFC29D380550029F2EB /* PollOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBFB29D380550029F2EB /* PollOptionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		549B60A929D31A9F0074CF88 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		549B60AA29D31A9F0074CF88 /* UITableView+Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Register.swift"; sourceTree = "<group>"; };
 		54E1EBF429D36F920029F2EB /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		54E1EBF729D374170029F2EB /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		54E1EBF929D376B20029F2EB /* PollTotalVotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollTotalVotesView.swift; sourceTree = "<group>"; };
+		54E1EBFB29D380550029F2EB /* PollOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollOptionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,7 @@
 		549B609929D3123E0074CF88 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				54E1EBF629D3740C0029F2EB /* View */,
 				549B609A29D312690074CF88 /* Cells */,
 				549B608729D310000074CF88 /* ChatViewController.swift */,
 			);
@@ -137,6 +144,16 @@
 				549B60AA29D31A9F0074CF88 /* UITableView+Register.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		54E1EBF629D3740C0029F2EB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				54E1EBF729D374170029F2EB /* GradientView.swift */,
+				54E1EBF929D376B20029F2EB /* PollTotalVotesView.swift */,
+				54E1EBFB29D380550029F2EB /* PollOptionView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,12 +229,15 @@
 			files = (
 				549B608829D310000074CF88 /* ChatViewController.swift in Sources */,
 				549B60AD29D31A9F0074CF88 /* UITableView+Register.swift in Sources */,
+				54E1EBF829D374170029F2EB /* GradientView.swift in Sources */,
 				549B608429D310000074CF88 /* AppDelegate.swift in Sources */,
 				549B60A329D312BF0074CF88 /* User.swift in Sources */,
 				549B609E29D312950074CF88 /* ChatPollCell.swift in Sources */,
 				549B60A529D312BF0074CF88 /* Poll.swift in Sources */,
 				549B609C29D3127B0074CF88 /* ChatTextCell.swift in Sources */,
+				54E1EBFC29D380550029F2EB /* PollOptionView.swift in Sources */,
 				549B608629D310000074CF88 /* SceneDelegate.swift in Sources */,
+				54E1EBFA29D376B20029F2EB /* PollTotalVotesView.swift in Sources */,
 				549B60A429D312BF0074CF88 /* Message.swift in Sources */,
 				549B60AB29D31A9F0074CF88 /* UIFont.swift in Sources */,
 				549B60AC29D31A9F0074CF88 /* UIColor.swift in Sources */,
