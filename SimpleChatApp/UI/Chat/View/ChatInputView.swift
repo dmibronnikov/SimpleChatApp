@@ -1,6 +1,12 @@
 import UIKit
 
 final class ChatInputView: UIView, UITextFieldDelegate {
+    struct Actions {
+        let sendText: (_ text: String) -> Void
+        let createPoll: () -> Void
+    }
+    var actions: Actions!
+    
     private let pollButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
@@ -18,9 +24,12 @@ final class ChatInputView: UIView, UITextFieldDelegate {
                 .font: UIFont.appFont(size: 15, weight: .regular)
             ]
         )
+        textField.textColor = .textPrimary
+        textField.font = .appFont(size: 15, weight: .regular)
         textField.layer.cornerRadius = 10
         textField.leftView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 15, height: 0)))
         textField.leftViewMode = .always
+        textField.returnKeyType = .send
         
         return textField
     }()
@@ -37,6 +46,9 @@ final class ChatInputView: UIView, UITextFieldDelegate {
         [pollButton, textField, sendButton].forEach { addSubview($0) }
         
         textField.delegate = self
+        
+        sendButton.addTarget(self, action: #selector(onSendButtonTap), for: .touchUpInside)
+        pollButton.addTarget(self, action: #selector(onPollButtonTap), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -72,8 +84,28 @@ final class ChatInputView: UIView, UITextFieldDelegate {
         sendButton.frame = sendButtonFrame
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    // MARK: - Actions
+    
+    @objc private func onPollButtonTap(_ sender: UIButton) {
+        actions.createPoll()
+    }
+    
+    @objc private func onSendButtonTap(_ sender: UIButton) {
+        sendText()
+    }
+    
+    private func sendText() {
+        guard let text = textField.text else { return }
+        
+        actions.sendText(text)
+        textField.text = nil
         textField.resignFirstResponder()
+    }
+    
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        sendText()
         return true
     }
 }

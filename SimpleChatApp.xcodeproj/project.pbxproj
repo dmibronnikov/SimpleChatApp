@@ -27,6 +27,8 @@
 		54E1EBFE29D38F400029F2EB /* ChatTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBFD29D38F400029F2EB /* ChatTitleView.swift */; };
 		54E1EC0029D390C20029F2EB /* ChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBFF29D390C20029F2EB /* ChatInputView.swift */; };
 		54E1EC0329D4B20B0029F2EB /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC0229D4B20B0029F2EB /* ChatCoordinator.swift */; };
+		54E1EC0629D4B4070029F2EB /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC0529D4B4070029F2EB /* ChatService.swift */; };
+		54E1EC0829D4B4DE0029F2EB /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC0729D4B4DE0029F2EB /* Content.swift */; };
 		54E1EC0B29D4BF4D0029F2EB /* PollCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC0A29D4BF4C0029F2EB /* PollCreationViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,8 @@
 		54E1EBFD29D38F400029F2EB /* ChatTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTitleView.swift; sourceTree = "<group>"; };
 		54E1EBFF29D390C20029F2EB /* ChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputView.swift; sourceTree = "<group>"; };
 		54E1EC0229D4B20B0029F2EB /* ChatCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
+		54E1EC0529D4B4070029F2EB /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		54E1EC0729D4B4DE0029F2EB /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
 		54E1EC0A29D4BF4C0029F2EB /* PollCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCreationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +90,7 @@
 		549B608229D310000074CF88 /* SimpleChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				54E1EC0429D4B4000029F2EB /* Services */,
 				54E1EC0129D4B2020029F2EB /* Coordinators */,
 				549B60A729D31A940074CF88 /* Extensions */,
 				549B609F29D312AD0074CF88 /* Model */,
@@ -142,6 +147,7 @@
 				549B60A129D312BF0074CF88 /* Message.swift */,
 				549B60A229D312BF0074CF88 /* Poll.swift */,
 				549B60A029D312BF0074CF88 /* User.swift */,
+				54E1EC0729D4B4DE0029F2EB /* Content.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,6 +180,14 @@
 				54E1EC0229D4B20B0029F2EB /* ChatCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		54E1EC0429D4B4000029F2EB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				54E1EC0529D4B4070029F2EB /* ChatService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		54E1EC0929D4BF3A0029F2EB /* PollCreation */ = {
@@ -261,6 +275,7 @@
 				549B608429D310000074CF88 /* AppDelegate.swift in Sources */,
 				54E1EC0B29D4BF4D0029F2EB /* PollCreationViewController.swift in Sources */,
 				54E1EC0329D4B20B0029F2EB /* ChatCoordinator.swift in Sources */,
+				54E1EC0629D4B4070029F2EB /* ChatService.swift in Sources */,
 				549B60A329D312BF0074CF88 /* User.swift in Sources */,
 				549B609E29D312950074CF88 /* ChatPollCell.swift in Sources */,
 				549B60A529D312BF0074CF88 /* Poll.swift in Sources */,
@@ -269,6 +284,7 @@
 				54E1EC0029D390C20029F2EB /* ChatInputView.swift in Sources */,
 				549B608629D310000074CF88 /* SceneDelegate.swift in Sources */,
 				54E1EBFA29D376B20029F2EB /* PollTotalVotesView.swift in Sources */,
+				54E1EC0829D4B4DE0029F2EB /* Content.swift in Sources */,
 				549B60A429D312BF0074CF88 /* Message.swift in Sources */,
 				549B60AB29D31A9F0074CF88 /* UIFont.swift in Sources */,
 				549B60AC29D31A9F0074CF88 /* UIColor.swift in Sources */,
