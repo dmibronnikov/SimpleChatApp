@@ -1,5 +1,3 @@
-import Foundation
-
 struct Poll {
     struct Option {
         let id: Int

@@ -1,5 +1,3 @@
-import Foundation
-
 struct Message {
     enum Content {
         case text(text: String)
