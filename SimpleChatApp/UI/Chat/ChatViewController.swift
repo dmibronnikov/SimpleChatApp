@@ -163,7 +163,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @objc private func keyboardWillHide(notification: NSNotification) {
         disableLayout = true
-        let safeArea = view.safeAreaInsets
         var inputContainerFrame = chatInputContainerView.frame
         inputContainerFrame.origin = CGPoint(
             x: 0,
