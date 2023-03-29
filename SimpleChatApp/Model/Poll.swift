@@ -5,7 +5,6 @@ struct Poll {
         let votes: Int
     }
     
-    let id: Int
     let question: String
     let options: [Option]
     

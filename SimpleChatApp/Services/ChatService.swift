@@ -66,12 +66,12 @@ fileprivate enum MockData {
         let id = 1
         let options: [Poll.Option] = [
             .init(id: 1, text: "Los Angeles Lakers", votes: 0),
-            .init(id: 2, text: "Golden State Warriors", votes: 0),
-            .init(id: 3, text: "Chicago Bulls", votes: 0),
-            .init(id: 2, text: "Boston Celtics", votes: 0)
+            .init(id: 2, text: "Golden State Warriors", votes: 5),
+            .init(id: 3, text: "Chicago Bulls", votes: 8),
+            .init(id: 4, text: "Boston Celtics", votes: 2)
         ]
         
-        return Poll(id: id, question: "What is the greatest NBA team in history?", options: options)
+        return Poll(question: "What is the greatest NBA team in history?", options: options)
     }()
     
     private static let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
