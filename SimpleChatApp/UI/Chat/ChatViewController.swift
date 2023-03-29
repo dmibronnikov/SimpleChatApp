@@ -21,6 +21,8 @@ private let users: [Int: User] = [
 ]
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    let coordinator: ChatCoordinator
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         
@@ -40,6 +42,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private let chatInputView: ChatInputView = ChatInputView()
     
     private var disableLayout: Bool = false
+    
+    init(with coordinator: ChatCoordinator) {
+        self.coordinator = coordinator
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) { fatalError() }
     
     override func viewDidLoad() {
         super.viewDidLoad()
