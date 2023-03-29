@@ -27,6 +27,7 @@
 		54E1EBFE29D38F400029F2EB /* ChatTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBFD29D38F400029F2EB /* ChatTitleView.swift */; };
 		54E1EC0029D390C20029F2EB /* ChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EBFF29D390C20029F2EB /* ChatInputView.swift */; };
 		54E1EC0329D4B20B0029F2EB /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC0229D4B20B0029F2EB /* ChatCoordinator.swift */; };
+		54E1EC0B29D4BF4D0029F2EB /* PollCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC0A29D4BF4C0029F2EB /* PollCreationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		54E1EBFD29D38F400029F2EB /* ChatTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTitleView.swift; sourceTree = "<group>"; };
 		54E1EBFF29D390C20029F2EB /* ChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputView.swift; sourceTree = "<group>"; };
 		54E1EC0229D4B20B0029F2EB /* ChatCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
+		54E1EC0A29D4BF4C0029F2EB /* PollCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCreationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		549B609829D312370074CF88 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				54E1EC0929D4BF3A0029F2EB /* PollCreation */,
 				549B609929D3123E0074CF88 /* Chat */,
 			);
 			path = UI;
@@ -171,6 +174,14 @@
 				54E1EC0229D4B20B0029F2EB /* ChatCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		54E1EC0929D4BF3A0029F2EB /* PollCreation */ = {
+			isa = PBXGroup;
+			children = (
+				54E1EC0A29D4BF4C0029F2EB /* PollCreationViewController.swift */,
+			);
+			path = PollCreation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +259,7 @@
 				549B60AD29D31A9F0074CF88 /* UITableView+Register.swift in Sources */,
 				54E1EBF829D374170029F2EB /* GradientView.swift in Sources */,
 				549B608429D310000074CF88 /* AppDelegate.swift in Sources */,
+				54E1EC0B29D4BF4D0029F2EB /* PollCreationViewController.swift in Sources */,
 				54E1EC0329D4B20B0029F2EB /* ChatCoordinator.swift in Sources */,
 				549B60A329D312BF0074CF88 /* User.swift in Sources */,
 				549B609E29D312950074CF88 /* ChatPollCell.swift in Sources */,
