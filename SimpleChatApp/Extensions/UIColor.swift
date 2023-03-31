@@ -2,6 +2,7 @@ import UIKit
 
 extension UIColor {
     static let accent: UIColor = UIColor(named: "Accent")!
+    static let darkAccent: UIColor = UIColor(named: "DarkAccent")!
     static let background: UIColor = UIColor(named: "Background")!
     static let lightBackground: UIColor = UIColor(named: "LightBackground")!
     static let pink: UIColor = UIColor(named: "Pink")!
