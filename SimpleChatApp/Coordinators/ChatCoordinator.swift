@@ -28,9 +28,9 @@ final class ChatCoordinator {
             content: { self.container.chatService.content }
         )
         chatController.actions = .init(
-            createPoll: {
+            createPoll: { [unowned navigationController] in
                 let pollCreationController = self.createPollCreationController()
-                self.navigationController.present(pollCreationController, animated: true)
+                navigationController.present(UINavigationController(rootViewController: pollCreationController), animated: true)
             },
             sendText: { self.container.chatService.sendText($0) }
         )
