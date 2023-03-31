@@ -127,7 +127,7 @@
 		549B609929D3123E0074CF88 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				54E1EBF629D3740C0029F2EB /* View */,
+				54E1EBF629D3740C0029F2EB /* Views */,
 				549B609A29D312690074CF88 /* Cells */,
 				549B608729D310000074CF88 /* ChatViewController.swift */,
 			);
@@ -164,7 +164,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		54E1EBF629D3740C0029F2EB /* View */ = {
+		54E1EBF629D3740C0029F2EB /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				54E1EBF729D374170029F2EB /* GradientView.swift */,
@@ -173,7 +173,7 @@
 				54E1EBFD29D38F400029F2EB /* ChatTitleView.swift */,
 				54E1EBFF29D390C20029F2EB /* ChatInputView.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		54E1EC0129D4B2020029F2EB /* Coordinators */ = {
