@@ -1,9 +1,17 @@
 import UIKit
 
 private let questionCharacterLimit: Int = 140
+private let optionsLimit = 8
+
 final class PollCreationViewController: UITableViewController {
     private enum Section: Int, CaseIterable {
         case question
+        case options
+    }
+    
+    private enum OptionItem {
+        case option(id: Int, text: String)
+        case addOption
     }
     
     private let titleLabel: UILabel = {
@@ -34,8 +42,41 @@ final class PollCreationViewController: UITableViewController {
         header.configure(text: "Question", maxCount: questionCharacterLimit)
         return header
     }()
+    private let optionsHeaderView: CounterSectionHeader = {
+        let header = CounterSectionHeader()
+        header.configure(text: "Options", maxCount: optionsLimit)
+        return header
+    }()
     
-    private var questionText: String = ""
+    private var questionText: String = "" {
+        didSet {
+            updateCreatePollButtonState()
+        }
+    }
+    private var options: [Int: String] = [:] {
+        didSet {
+            optionsHeaderView.update(with: options.count)
+            updateCreatePollButtonState()
+            tableView.reloadData()
+        }
+    }
+    private var optionsIds: [Int] {
+        options.keys.sorted()
+    }
+    private var nextOptionId: Int {
+        guard let lastId = optionsIds.last else { return 1 }
+        
+        return lastId + 1
+    }
+    private var optionsItems: [OptionItem] {
+        var items: [OptionItem] = optionsIds.map { .option(id: $0, text: options[$0]!) }
+        if options.count < optionsLimit {
+            items.append(.addOption)
+        }
+        
+        return items
+    }
+    private var createButton: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +90,8 @@ final class PollCreationViewController: UITableViewController {
         tableView.separatorStyle = .none
         tableView.backgroundView = gradientBackgroundView
         tableView.register(PollCreationQuestionCell.self)
+        tableView.register(PollCreationOptionCell.self)
+        tableView.register(PollCreationAddOptionCell.self)
     }
     
     private func setupNavigationBar() {
@@ -62,20 +105,30 @@ final class PollCreationViewController: UITableViewController {
         )
         cancelButton.tintColor = .textPrimary
         
-        let createButton = UIBarButtonItem(
+        createButton = UIBarButtonItem(
             title: "Create",
             style: .plain,
             target: self,
             action: #selector(onCreatePollTapped)
         )
-        createButton.setTitleTextAttributes([
+        createButton?.setTitleTextAttributes([
             .font: UIFont.appFont(size: 14, weight: .medium),
             .foregroundColor: UIColor.accent
         ], for: .normal)
-        createButton.tintColor = .accent
+        createButton?.setTitleTextAttributes([
+            .font: UIFont.appFont(size: 14, weight: .medium),
+            .foregroundColor: UIColor.gray
+        ], for: .disabled)
+        createButton?.tintColor = .accent
+        updateCreatePollButtonState()
         
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = createButton
+    }
+    
+    private func updateCreatePollButtonState() {
+        createButton?.isEnabled = !(options.filter { !$0.value.isEmpty }.isEmpty
+                                    || questionText.isEmpty)
     }
     
     @objc private func onCloseTapped(_ sender: UIBarButtonItem) {
@@ -84,12 +137,6 @@ final class PollCreationViewController: UITableViewController {
     
     @objc private func onCreatePollTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        
     }
     
     // MARK: - UITableViewDataSource
@@ -102,6 +149,8 @@ final class PollCreationViewController: UITableViewController {
         switch Section(rawValue: section)! {
             case .question:
                 return 1
+            case .options:
+                return optionsItems.count
         }
     }
     
@@ -109,6 +158,8 @@ final class PollCreationViewController: UITableViewController {
         switch Section(rawValue: indexPath.section)! {
             case .question:
                 return dequeueQuestionCell(tableView, cellForRowAt: indexPath)
+            case .options:
+                return dequeueOptionCell(tableView, cellForRowAt: indexPath)
         }
     }
     
@@ -116,6 +167,8 @@ final class PollCreationViewController: UITableViewController {
         switch Section(rawValue: section)! {
             case .question:
                 return questionHeaderView
+            case .options:
+                return optionsHeaderView
         }
     }
     
@@ -133,5 +186,52 @@ final class PollCreationViewController: UITableViewController {
         return cell
     }
     
-    // MARK: - UITableViewDelegate
+    private func dequeueOptionCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch optionsItems[indexPath.row] {
+            case .option(let id, let text):
+                let cell = tableView.dequeue(PollCreationOptionCell.self, at: indexPath)
+                cell.configure(with: text)
+                cell.actions = .init(
+                    delete: { [weak self] in
+                        self?.options.removeValue(forKey: id)
+                    },
+                    textChanged: { [weak self] updatedText in
+                        self?.options[id] = updatedText
+                    }
+                )
+                
+                return cell
+            case .addOption:
+                return tableView.dequeue(PollCreationAddOptionCell.self, at: indexPath)
+        }
+    }
+    
+    //MARK: - UITableViewDelegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch Section(rawValue: indexPath.section)! {
+            case .options:
+                if case .addOption = optionsItems[indexPath.row] {
+                    options[nextOptionId] = ""
+                }
+            case .question:
+                break
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch Section(rawValue: indexPath.section)! {
+            case .question:
+                return UITableView.automaticDimension
+            case .options:
+                switch optionsItems[indexPath.row] {
+                    case .option:
+                        return PollCreationOptionCell.height
+                    case .addOption:
+                        return PollCreationAddOptionCell.height
+                }
+        }
+    }
 }

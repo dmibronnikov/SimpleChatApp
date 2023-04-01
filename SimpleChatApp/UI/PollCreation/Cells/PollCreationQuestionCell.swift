@@ -16,7 +16,7 @@ final class PollCreationQuestionCell: UITableViewCell, UITextViewDelegate {
         textView.backgroundColor = .lightBackground
         textView.layer.cornerRadius = 12
         textView.font = .appFont(size: 15, weight: .regular)
-        textView.textContainerInset = UIEdgeInsets(top: 15, left: 20, bottom: 14, right: 20)
+        textView.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 14, right: 10)
         textView.textColor = .textSecondary
         textView.text = placeholder
         
@@ -67,7 +67,9 @@ final class PollCreationQuestionCell: UITableViewCell, UITextViewDelegate {
     // MARK: - UITextViewDelegate
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        displayPlaceholder = false
+        if displayPlaceholder {
+            displayPlaceholder = false
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
