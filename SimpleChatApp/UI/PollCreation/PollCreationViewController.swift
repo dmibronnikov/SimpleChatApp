@@ -4,6 +4,11 @@ private let questionCharacterLimit: Int = 140
 private let optionsLimit = 8
 
 final class PollCreationViewController: UITableViewController {
+    struct Actions {
+        let createPoll: (_ poll: Poll) -> Void
+    }
+    var actions: Actions!
+    
     private enum Section: Int, CaseIterable {
         case question
         case options
@@ -131,11 +136,19 @@ final class PollCreationViewController: UITableViewController {
                                     || questionText.isEmpty)
     }
     
+    // MARK: - Actions
+    
     @objc private func onCloseTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true)
     }
     
     @objc private func onCreatePollTapped(_ sender: UIBarButtonItem) {
+        let poll = Poll(
+            question: questionText,
+            options: optionsIds.map { Poll.Option(id: $0, text: options[$0] ?? "", votes: 0) }
+        )
+        
+        actions.createPoll(poll)
         dismiss(animated: true)
     }
     
