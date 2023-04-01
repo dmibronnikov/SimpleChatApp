@@ -19,6 +19,7 @@ final class PollTotalVotesView: UIView {
     var votes: Int = 0 {
         didSet {
             votesCountLabel.text = "\(votes)"
+            setNeedsLayout()
         }
     }
     
