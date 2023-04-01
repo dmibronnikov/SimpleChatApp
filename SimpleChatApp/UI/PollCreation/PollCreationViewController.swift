@@ -28,6 +28,15 @@ final class PollCreationViewController: UITableViewController {
         
         return gradientView
     }()
+    
+    private let questionHeaderView: CounterSectionHeader = {
+        let header = CounterSectionHeader()
+        header.configure(text: "Question", maxCount: questionCharacterLimit)
+        return header
+    }()
+    
+    private var questionText: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,10 +99,19 @@ final class PollCreationViewController: UITableViewController {
                 return dequeueQuestionCell(tableView, cellForRowAt: indexPath)
         }
     }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch Section(rawValue: section)! {
+            case .question:
+                return questionHeaderView
+        }
+    }
+    
     private func dequeueQuestionCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(PollCreationQuestionCell.self, at: indexPath)
         cell.configure(with: questionCharacterLimit) { [weak self, weak tableView] text in
             self?.questionText = text
+            self?.questionHeaderView.update(with: text.count)
             DispatchQueue.main.async {
                 tableView?.beginUpdates()
                 tableView?.endUpdates()
