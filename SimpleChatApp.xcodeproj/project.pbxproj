@@ -32,6 +32,7 @@
 		54E1EC0B29D4BF4D0029F2EB /* PollCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC0A29D4BF4C0029F2EB /* PollCreationViewController.swift */; };
 		54E1EC0D29D64FDC0029F2EB /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC0C29D64FDC0029F2EB /* Container.swift */; };
 		54E1EC1029D7814E0029F2EB /* PollCreationQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC0F29D7814E0029F2EB /* PollCreationQuestionCell.swift */; };
+		54E1EC1829D897590029F2EB /* CounterSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1EC1729D897590029F2EB /* CounterSectionHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		54E1EC0A29D4BF4C0029F2EB /* PollCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCreationViewController.swift; sourceTree = "<group>"; };
 		54E1EC0C29D64FDC0029F2EB /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		54E1EC0F29D7814E0029F2EB /* PollCreationQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCreationQuestionCell.swift; sourceTree = "<group>"; };
+		54E1EC1729D897590029F2EB /* CounterSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterSectionHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +200,7 @@
 		54E1EC0929D4BF3A0029F2EB /* PollCreation */ = {
 			isa = PBXGroup;
 			children = (
+				54E1EC1629D897410029F2EB /* Views */,
 				54E1EC0E29D781210029F2EB /* Cells */,
 				54E1EC0A29D4BF4C0029F2EB /* PollCreationViewController.swift */,
 			);
@@ -210,6 +213,14 @@
 				54E1EC0F29D7814E0029F2EB /* PollCreationQuestionCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		54E1EC1629D897410029F2EB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				54E1EC1729D897590029F2EB /* CounterSectionHeader.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,6 +312,7 @@
 				54E1EC1029D7814E0029F2EB /* PollCreationQuestionCell.swift in Sources */,
 				54E1EBFA29D376B20029F2EB /* PollTotalVotesView.swift in Sources */,
 				54E1EC0829D4B4DE0029F2EB /* Content.swift in Sources */,
+				54E1EC1829D897590029F2EB /* CounterSectionHeader.swift in Sources */,
 				549B60A429D312BF0074CF88 /* Message.swift in Sources */,
 				549B60AB29D31A9F0074CF88 /* UIFont.swift in Sources */,
 				549B60AC29D31A9F0074CF88 /* UIColor.swift in Sources */,
