@@ -2,7 +2,7 @@ import UIKit
 
 private let placeholder: String = "Ask a question"
 
-final class QuestionTextViewCell: UITableViewCell, UITextViewDelegate {
+final class PollCreationQuestionCell: UITableViewCell, UITextViewDelegate {
     private var displayPlaceholder: Bool = true {
         didSet {
             updatePlaceholder()

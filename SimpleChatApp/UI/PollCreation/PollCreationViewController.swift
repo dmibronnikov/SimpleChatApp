@@ -1,18 +1,9 @@
 import UIKit
 
+private let questionCharacterLimit: Int = 140
 final class PollCreationViewController: UITableViewController {
-    
-    private enum Section {
+    private enum Section: Int, CaseIterable {
         case question
-        case options
-        case settings
-    }
-    
-    private enum Cell {
-        case question
-        case option
-        case addOption
-        case setting
     }
     
     private let titleLabel: UILabel = {
@@ -48,7 +39,7 @@ final class PollCreationViewController: UITableViewController {
         tableView.backgroundColor = .background
         tableView.separatorStyle = .none
         tableView.backgroundView = gradientBackgroundView
-        tableView.register(QuestionTextViewCell.self)
+        tableView.register(PollCreationQuestionCell.self)
     }
     
     private func setupNavigationBar() {
@@ -82,13 +73,27 @@ final class PollCreationViewController: UITableViewController {
     
     // MARK: - UITableViewDataSource
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        Section.allCases.count
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        switch Section(rawValue: section)! {
+            case .question:
+                return 1
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeue(QuestionTextViewCell.self, at: indexPath)
-        cell.configure(with: 140) { [weak tableView] _ in
+        switch Section(rawValue: indexPath.section)! {
+            case .question:
+                return dequeueQuestionCell(tableView, cellForRowAt: indexPath)
+        }
+    }
+    private func dequeueQuestionCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeue(PollCreationQuestionCell.self, at: indexPath)
+        cell.configure(with: questionCharacterLimit) { [weak self, weak tableView] text in
+            self?.questionText = text
             DispatchQueue.main.async {
                 tableView?.beginUpdates()
                 tableView?.endUpdates()
