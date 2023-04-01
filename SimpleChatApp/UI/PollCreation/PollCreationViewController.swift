@@ -53,17 +53,29 @@ final class PollCreationViewController: UITableViewController {
     
     private func setupNavigationBar() {
         navigationItem.titleView = titleLabel
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .close,
+        
+        let cancelButton = UIBarButtonItem(
+            image: UIImage(named: "cancel_18"),
+            style: .plain,
             target: self,
             action: #selector(onCloseTapped)
         )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
+        cancelButton.tintColor = .textPrimary
+        
+        let createButton = UIBarButtonItem(
             title: "Create",
             style: .plain,
             target: self,
             action: #selector(onCreatePollTapped)
         )
+        createButton.setTitleTextAttributes([
+            .font: UIFont.appFont(size: 14, weight: .medium),
+            .foregroundColor: UIColor.accent
+        ], for: .normal)
+        createButton.tintColor = .accent
+        
+        navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.rightBarButtonItem = createButton
     }
     
     @objc private func onCloseTapped(_ sender: UIBarButtonItem) {
