@@ -126,7 +126,7 @@ final class ChatPollCell: UITableViewCell {
         ])
         NSLayoutConstraint.activate([
             pollTypeLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 10),
-            pollTypeLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
+            pollTypeLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 24),
             usernameLabel.leadingAnchor.constraint(equalTo: pollTypeLabel.leadingAnchor),
             usernameLabel.topAnchor.constraint(equalTo: pollTypeLabel.bottomAnchor, constant: 2)
         ])
