@@ -53,6 +53,15 @@ final class ChatPollCell: UITableViewCell {
         
         return label
     }()
+    private let pollOptionsContainer: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.alignment = .fill
+        stackView.distribution = .equalSpacing
+        
+        return stackView
+    }()
     private var pollOptionViews: [PollOptionView] = []
     
     private let containerGradientLayer: CAGradientLayer = {
@@ -83,7 +92,7 @@ final class ChatPollCell: UITableViewCell {
     private func setup() {
         contentView.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        [avatarView, usernameLabel, pollTypeLabel, totalVotesView, questionLabel].forEach {
+        [avatarView, usernameLabel, pollTypeLabel, totalVotesView, questionLabel, pollOptionsContainer].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview($0)
         }
@@ -124,7 +133,12 @@ final class ChatPollCell: UITableViewCell {
             questionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             questionLabel.topAnchor.constraint(equalTo: avatarView.bottomAnchor, constant: 20),
             questionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            questionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -20)
+        ])
+        NSLayoutConstraint.activate([
+            pollOptionsContainer.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            pollOptionsContainer.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 12),
+            pollOptionsContainer.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            pollOptionsContainer.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
         ])
     }
     
@@ -152,19 +166,11 @@ final class ChatPollCell: UITableViewCell {
             
             containerView.addSubview(optionView)
             optionView.translatesAutoresizingMaskIntoConstraints = false
+            optionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
             
-            let lastView = pollOptionViews.last ?? questionLabel
-            NSLayoutConstraint.activate([
-                optionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-                optionView.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 12),
-                optionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-                optionView.heightAnchor.constraint(equalToConstant: 40)
-            ])
+            pollOptionsContainer.addArrangedSubview(optionView)
             
             pollOptionViews.append(optionView)
         }
-        
-        guard let lastOptionView = pollOptionViews.last else { return }
-        lastOptionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20).isActive = true
     }
 }
