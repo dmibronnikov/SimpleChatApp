@@ -38,6 +38,7 @@ final class ChatTextCell: UITableViewCell {
             contentView.addSubview($0)
         }
         
+        transform = CGAffineTransform(scaleX: 1, y: -1)
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         selectionStyle = .none

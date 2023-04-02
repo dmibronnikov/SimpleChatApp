@@ -97,6 +97,7 @@ final class ChatPollCell: UITableViewCell {
             containerView.addSubview($0)
         }
         
+        transform = CGAffineTransform(scaleX: 1, y: -1)
         selectionStyle = .none
         backgroundColor = .clear
         contentView.backgroundColor = .clear

@@ -135,13 +135,11 @@ class ChatViewController: UITableViewController {
             case .text(let text):
                 let textCell = tableView.dequeue(ChatTextCell.self, at: indexPath)
                 textCell.configure(messageId: message.id, text: text, sender: sender)
-                textCell.transform = CGAffineTransform(scaleX: 1, y: -1)
                 
                 return textCell
             case .poll(let poll):
                 let pollCell = tableView.dequeue(ChatPollCell.self, at: indexPath)
                 pollCell.configure(messageId: message.id, poll: poll, sender: sender)
-                pollCell.transform = CGAffineTransform(scaleX: 1, y: -1)
                 
                 return pollCell
         }
