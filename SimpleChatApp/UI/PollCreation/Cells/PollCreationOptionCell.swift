@@ -93,6 +93,7 @@ final class PollCreationOptionCell: UITableViewCell, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        actions.textChanged(textField.text ?? "")
         textField.resignFirstResponder()
         return true
     }

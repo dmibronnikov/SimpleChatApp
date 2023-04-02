@@ -65,6 +65,9 @@ final class PollCreationViewController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    private var selectedId: Int?
+    
     private var optionsIds: [Int] {
         options.keys.sorted()
     }
@@ -176,6 +179,14 @@ final class PollCreationViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let selectedId = selectedId,
+           case .option(let id, _) = optionsItems[indexPath.row],
+           id == selectedId {
+            cell.becomeFirstResponder()
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch Section(rawValue: section)! {
             case .question:
@@ -210,6 +221,9 @@ final class PollCreationViewController: UITableViewController {
                     },
                     textChanged: { [weak self] updatedText in
                         self?.options[id] = updatedText
+                        if let selectedId = self?.selectedId, selectedId == id {
+                            self?.selectedId = nil
+                        }
                     }
                 )
                 
@@ -225,7 +239,9 @@ final class PollCreationViewController: UITableViewController {
         switch Section(rawValue: indexPath.section)! {
             case .options:
                 if case .addOption = optionsItems[indexPath.row] {
-                    options[nextOptionId] = ""
+                    let id = nextOptionId
+                    options[id] = ""
+                    selectedId = id
                 }
             case .question:
                 break
