@@ -58,7 +58,7 @@ final class ChatPollCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.alignment = .fill
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fill
         
         return stackView
     }()
@@ -167,7 +167,9 @@ final class ChatPollCell: UITableViewCell {
             
             containerView.addSubview(optionView)
             optionView.translatesAutoresizingMaskIntoConstraints = false
-            optionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            let heightConstraint = optionView.heightAnchor.constraint(equalToConstant: 40)
+            heightConstraint.priority = UILayoutPriority(999)
+            heightConstraint.isActive = true
             
             pollOptionsContainer.addArrangedSubview(optionView)
             
