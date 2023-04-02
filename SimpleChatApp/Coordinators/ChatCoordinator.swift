@@ -39,7 +39,7 @@ final class ChatCoordinator {
     }
     
     private func createPollCreationController() -> PollCreationViewController {
-        let pollCreationViewController = PollCreationViewController()
+        let pollCreationViewController = PollCreationViewController(style: .grouped)
         pollCreationViewController.actions = .init(
             createPoll: { poll in
                 self.container.chatService.sendPoll(poll)
