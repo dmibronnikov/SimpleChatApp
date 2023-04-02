@@ -1,6 +1,6 @@
 import UIKit
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ChatViewController: UITableViewController {
     struct Data {
         let messageIds: () -> [Int]
         let content: () -> Content
@@ -14,25 +14,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var data: Data!
     var actions: Actions!
     
-    private let tableView: UITableView = {
-        let tableView = UITableView()
-        
-        tableView.backgroundColor = .background
-        tableView.separatorStyle = .none
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.automaticallyAdjustsScrollIndicatorInsets = false
-        
-        return tableView
-    }()
-    private let chatInputContainerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .background
-        
-        return view
-    }()
-    private let chatInputView: ChatInputView = ChatInputView()
+    private lazy var chatAccessoryView: ChatAccessoryView = ChatAccessoryView()
     
-    private var disableLayout: Bool = false
+    override var inputAccessoryView: UIView? { chatAccessoryView }
+    
+    override var canBecomeFirstResponder: Bool { true }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +28,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         setupNavigationBar()
         setupTableView()
         
-        view.addSubview(chatInputContainerView)
-        chatInputContainerView.addSubview(chatInputView)
-        chatInputView.actions = .init(
+        chatAccessoryView.actions = .init(
             sendText: actions.sendText,
             createPoll: actions.createPoll
         )
@@ -52,45 +36,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         setupKeyboardNotification()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        guard !disableLayout else { return }
-        
-        let inputContainerSize = CGSize(
-            width: view.bounds.width,
-            height: 95
-        )
-        chatInputContainerView.frame = CGRect(
-            origin: CGPoint(x: 0, y: view.bounds.height - inputContainerSize.height),
-            size: inputContainerSize
-        )
-        let inputSize = CGSize(
-            width: inputContainerSize.width - 40,
-            height: 40
-        )
-        chatInputView.frame = CGRect(
-            origin: CGPoint(x: 20, y: 15),
-            size: inputSize
-        )
-        
-        let safeArea = view.safeAreaInsets
-        tableView.frame = view.frame
-        
-        let contentInset = UIEdgeInsets(
-            top: safeArea.bottom + chatInputView.frame.maxY,
-            left: 0,
-            bottom: safeArea.top,
-            right: 0
-        )
-        tableView.contentInset = contentInset
-        tableView.scrollIndicatorInsets = contentInset
+    private func scrollToTop() {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     
     // MARK: - Public
     
     func update() {
         tableView.reloadData()
+        scrollToTop()
     }
     
     // MARK: - Setup
@@ -105,10 +59,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     private func setupTableView() {
-        view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
         
+        tableView.backgroundColor = .background
+        tableView.separatorStyle = .none
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.automaticallyAdjustsScrollIndicatorInsets = false
+        
+        tableView.keyboardDismissMode = .interactive
         tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         
         tableView.register(ChatTextCell.self)
@@ -128,63 +87,40 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardDidShow(notification:)),
-            name: UIResponder.keyboardDidShowNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardDidHide(notification:)),
-            name: UIResponder.keyboardDidHideNotification,
-            object: nil
-        )
     }
     
     // MARK: - Keyboard handling
-    
+
     @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        disableLayout = true
-        var inputContainerFrame = chatInputContainerView.frame
-        inputContainerFrame.origin = CGPoint(x: 0, y: keyboardSize.minY - chatInputView.frame.maxY - 10)
-        chatInputContainerView.frame = inputContainerFrame
-        
-        let topContentInset = view.bounds.height - inputContainerFrame.minY
-        tableView.contentInset.top = topContentInset
-        tableView.verticalScrollIndicatorInsets.top = topContentInset
-        tableView.setContentOffset(CGPoint(x: 0, y: -tableView.contentInset.top), animated: false)
-    }
-    
-    @objc private func keyboardDidShow(notification: NSNotification) {
-        disableLayout = false
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+
+        let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first!
+        let safeArea = window.safeAreaInsets
+        let contentInset = UIEdgeInsets(
+            top: keyboardFrame.height,
+            left: safeArea.left,
+            bottom: safeArea.top + (navigationController?.navigationBar.bounds.height ?? 0),
+            right: safeArea.right
+        )
+        tableView.contentInset = contentInset
+        tableView.verticalScrollIndicatorInsets = contentInset
+        if tableView.contentOffset.y <= 0 {
+            scrollToTop()
+        }
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
-        disableLayout = true
-        var inputContainerFrame = chatInputContainerView.frame
-        inputContainerFrame.origin = CGPoint(
-            x: 0,
-            y: view.bounds.height - inputContainerFrame.height
-        )
-        chatInputContainerView.frame = inputContainerFrame
-        let topContentInset = view.bounds.height - inputContainerFrame.minY
-        tableView.contentInset.top = topContentInset
-        tableView.verticalScrollIndicatorInsets.top = topContentInset
-    }
-    
-    @objc private func keyboardDidHide(notification: NSNotification) {
-        disableLayout = false
+        tableView.contentInset.top = chatAccessoryView.frame.height
+        tableView.verticalScrollIndicatorInsets.top = chatAccessoryView.frame.height
     }
     
     // MARK: - UITableViewDataSource
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         data.messageIds().count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let messageId = data.messageIds()[indexPath.row]
         let content = data.content()
         
@@ -211,4 +147,3 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
 }
-
