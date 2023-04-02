@@ -198,14 +198,18 @@ final class PollCreationViewController: UITableViewController {
     
     private func dequeueQuestionCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(PollCreationQuestionCell.self, at: indexPath)
-        cell.configure(with: questionCharacterLimit) { [weak self, weak tableView] text in
-            self?.questionText = text
-            self?.questionHeaderView.update(with: text.count)
-            DispatchQueue.main.async {
-                tableView?.beginUpdates()
-                tableView?.endUpdates()
+        cell.configure(with: questionCharacterLimit)
+        cell.actions = .init(
+            textChanged: { [weak self, weak tableView] text in
+                self?.questionText = text
+                self?.questionHeaderView.update(with: text.count)
+                
+                DispatchQueue.main.async {
+                    tableView?.beginUpdates()
+                    tableView?.endUpdates()
+                }
             }
-        }
+        )
         
         return cell
     }

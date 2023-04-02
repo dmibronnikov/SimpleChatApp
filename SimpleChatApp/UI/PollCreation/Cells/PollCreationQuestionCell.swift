@@ -3,6 +3,11 @@ import UIKit
 private let placeholder: String = "Ask a question"
 
 final class PollCreationQuestionCell: UITableViewCell, UITextViewDelegate {
+    struct Actions {
+        let textChanged: (String) -> Void
+    }
+    var actions: Actions!
+    
     private var displayPlaceholder: Bool = true {
         didSet {
             updatePlaceholder()
@@ -24,7 +29,6 @@ final class PollCreationQuestionCell: UITableViewCell, UITextViewDelegate {
     }()
     
     private var charactersLimit: Int?
-    private var textChanged: ((String) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,15 +53,14 @@ final class PollCreationQuestionCell: UITableViewCell, UITextViewDelegate {
     
     required init?(coder: NSCoder) { fatalError() }
     
-    func configure(with charactersLimit: Int, textChanged: @escaping (String) -> Void) {
+    func configure(with charactersLimit: Int) {
         self.charactersLimit = charactersLimit
-        self.textChanged = textChanged
     }
     
     private func updatePlaceholder() {
         if displayPlaceholder {
             textView.textColor = .textSecondary
-            textView.text = "Ask a question"
+            textView.text = placeholder
         } else {
             textView.textColor = .textPrimary
             textView.text = ""
@@ -90,6 +93,6 @@ final class PollCreationQuestionCell: UITableViewCell, UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        textChanged?(textView.text)
+        actions.textChanged(textView.text)
     }
 }
