@@ -126,6 +126,7 @@
 		549B609829D312370074CF88 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				54E1EC1E29D9C4100029F2EB /* Common */,
 				54E1EC0929D4BF3A0029F2EB /* PollCreation */,
 				549B609929D3123E0074CF88 /* Chat */,
 			);
@@ -175,7 +176,6 @@
 		54E1EBF629D3740C0029F2EB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				54E1EBF729D374170029F2EB /* GradientView.swift */,
 				54E1EBF929D376B20029F2EB /* PollTotalVotesView.swift */,
 				54E1EBFB29D380550029F2EB /* PollOptionView.swift */,
 				54E1EBFD29D38F400029F2EB /* ChatTitleView.swift */,
@@ -227,6 +227,14 @@
 				54E1EC1729D897590029F2EB /* CounterSectionHeader.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		54E1EC1E29D9C4100029F2EB /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				54E1EBF729D374170029F2EB /* GradientView.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
